@@ -43,12 +43,21 @@ pub fn summary_over_50_characters(content: &String) -> Result<String, String> {
     }
 }
 
+pub fn summary_ends_with_period(content: &String) -> Result<String, String> {
+    let ends_with_period: bool = summary_line(&content).ends_with(".");
+
+    match ends_with_period {
+        false => Ok("Summary line does not end in a period.".to_string()),
+        true => Err("Summary line end in a period.".to_string()),
+    }
+}
+
 #[cfg(test)]
 mod summary {
 
     use super::{
         first_summary_word_not_imperative_mood, first_summary_word_not_lowercase,
-        summary_over_50_characters,
+        summary_ends_with_period, summary_over_50_characters,
     };
 
     #[test]
@@ -87,6 +96,16 @@ mod summary {
             "D add overview, dependencies, changelog, license to readme".to_string();
 
         match summary_over_50_characters(&summary_line_to_long) {
+            Err(_) => Ok(()),
+            Ok(_) => Err("Did not error as expected."),
+        }
+    }
+
+    #[test]
+    fn summary_ends_with_period_test() -> Result<(), &'static str> {
+        let summary_ends_in_period: String = "D add readme.".to_string();
+
+        match summary_ends_with_period(&summary_ends_in_period) {
             Err(_) => Ok(()),
             Ok(_) => Err("Did not error as expected."),
         }
