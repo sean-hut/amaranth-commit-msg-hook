@@ -35,10 +35,21 @@ pub fn first_summary_word_not_imperative_mood(content: &String) -> Result<String
     }
 }
 
+pub fn summary_over_50_characters(content: &String) -> Result<String, String> {
+    if summary_line(content).len() < 50 {
+        Ok("Summary line is less than 50 characters.".to_string())
+    } else {
+        Err("Summary line is more than 50 characters.".to_string())
+    }
+}
+
 #[cfg(test)]
 mod summary {
 
-    use super::{first_summary_word_not_imperative_mood, first_summary_word_not_lowercase};
+    use super::{
+        first_summary_word_not_imperative_mood, first_summary_word_not_lowercase,
+        summary_over_50_characters,
+    };
 
     #[test]
     fn first_summary_word_not_lowercase_test() -> Result<(), &'static str> {
@@ -65,6 +76,17 @@ mod summary {
         let not_imperative_mood_addes: String = "D addes readme".to_string();
 
         match first_summary_word_not_imperative_mood(&not_imperative_mood_addes) {
+            Err(_) => Ok(()),
+            Ok(_) => Err("Did not error as expected."),
+        }
+    }
+
+    #[test]
+    fn summary_over_50_characters_test() -> Result<(), &'static str> {
+        let summary_line_to_long: String =
+            "D add overview, dependencies, changelog, license to readme".to_string();
+
+        match summary_over_50_characters(&summary_line_to_long) {
             Err(_) => Ok(()),
             Ok(_) => Err("Did not error as expected."),
         }
