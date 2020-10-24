@@ -27,21 +27,44 @@ pub fn first_summary_word_not_lowercase(content: &String) -> Result<String, Stri
     }
 }
 
+pub fn first_summary_word_not_imperative_mood(content: &String) -> Result<String, String> {
+    match first_summary_word(content).ends_with("ed") || first_summary_word(content).ends_with("es")
+    {
+        true => Err("Summary does not use imperative mood.".to_string()),
+        false => Ok("Summary uses imperative mood.".to_string()),
+    }
+}
+
 #[cfg(test)]
 mod summary {
 
-    use super::{
-        first_summary_word_not_imperative_mood, first_summary_word_not_lowercase,
-        invalid_category_abbreviation, summary_ends_with_period, summary_over_50_characters,
-    };
-
-    use super::first_summary_word_not_lowercase;
+    use super::{first_summary_word_not_imperative_mood, first_summary_word_not_lowercase};
 
     #[test]
     fn first_summary_word_not_lowercase_test() -> Result<(), &'static str> {
         let not_lowercase_first_word: String = "D Add readme".to_string();
 
         match first_summary_word_not_lowercase(&not_lowercase_first_word) {
+            Err(_) => Ok(()),
+            Ok(_) => Err("Did not error as expected."),
+        }
+    }
+
+    #[test]
+    fn first_summary_word_not_imperative_mood_added_test() -> Result<(), &'static str> {
+        let not_imperative_mood_added: String = "D added readme".to_string();
+
+        match first_summary_word_not_imperative_mood(&not_imperative_mood_added) {
+            Err(_) => Ok(()),
+            Ok(_) => Err("Did not error as expected."),
+        }
+    }
+
+    #[test]
+    fn first_summary_word_not_imperative_mood_addes_test() -> Result<(), &'static str> {
+        let not_imperative_mood_addes: String = "D addes readme".to_string();
+
+        match first_summary_word_not_imperative_mood(&not_imperative_mood_addes) {
             Err(_) => Ok(()),
             Ok(_) => Err("Did not error as expected."),
         }
