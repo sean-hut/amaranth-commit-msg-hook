@@ -7,8 +7,8 @@ pub fn empty(content: &String) -> Result<String, String> {
 
 pub fn not_ascii(content: &String) -> Result<String, String> {
     match content.is_ascii() {
-        true => Ok("Commit message is ascii.".to_string()),
-        false => Err("Commit message is not ascii.".to_string()),
+        true => Ok("Commit message is ASCII.".to_string()),
+        false => Err("Commit message is not ASCII.".to_string()),
     }
 }
 
