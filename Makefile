@@ -16,3 +16,7 @@ build: $(rust-files)
 
 test: $(rust-files)
 > cargo test
+
+.PHONY: clean
+clean :
+> cargo clean
