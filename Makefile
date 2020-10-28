@@ -24,5 +24,5 @@ test: $(rust-files)
 > cargo test
 
 .PHONY: clean
-clean :
+clean:
 > cargo clean
