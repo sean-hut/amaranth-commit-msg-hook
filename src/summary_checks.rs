@@ -1,7 +1,7 @@
 use std::process::exit;
 
-fn summary_line(content: &String) -> String {
-    match content.lines().nth(0) {
+fn summary_line(content: &str) -> String {
+    match content.lines().next() {
         Some(summary_line) => summary_line.to_string(),
         None => {
             eprintln!("ERROR: Commit message does not have a summary line.");
@@ -10,7 +10,7 @@ fn summary_line(content: &String) -> String {
     }
 }
 
-fn first_summary_word(content: &String) -> String {
+fn first_summary_word(content: &str) -> String {
     match summary_line(&content).split_ascii_whitespace().nth(1) {
         Some(s) => s.to_string(),
         None => {
@@ -20,14 +20,14 @@ fn first_summary_word(content: &String) -> String {
     }
 }
 
-pub fn first_summary_word_not_lowercase(content: &String) -> Result<String, String> {
+pub fn first_summary_word_not_lowercase(content: &str) -> Result<String, String> {
     match first_summary_word(content).to_ascii_lowercase() == first_summary_word(content) {
         true => Ok("First word in summary line is lowercase.".to_string()),
         false => Err("First word in summary line is not lowercase.".to_string()),
     }
 }
 
-pub fn first_summary_word_not_imperative_mood(content: &String) -> Result<String, String> {
+pub fn first_summary_word_not_imperative_mood(content: &str) -> Result<String, String> {
     match first_summary_word(content).ends_with("ed") || first_summary_word(content).ends_with("es")
     {
         true => Err("Summary does not use imperative mood.".to_string()),
@@ -35,7 +35,7 @@ pub fn first_summary_word_not_imperative_mood(content: &String) -> Result<String
     }
 }
 
-pub fn summary_over_50_characters(content: &String) -> Result<String, String> {
+pub fn summary_over_50_characters(content: &str) -> Result<String, String> {
     if summary_line(content).len() < 50 {
         Ok("Summary line is less than 50 characters.".to_string())
     } else {
@@ -43,8 +43,8 @@ pub fn summary_over_50_characters(content: &String) -> Result<String, String> {
     }
 }
 
-pub fn summary_ends_with_period(content: &String) -> Result<String, String> {
-    let ends_with_period: bool = summary_line(&content).ends_with(".");
+pub fn summary_ends_with_period(content: &str) -> Result<String, String> {
+    let ends_with_period: bool = summary_line(&content).ends_with('.');
 
     match ends_with_period {
         false => Ok("Summary line does not end in a period.".to_string()),
@@ -52,7 +52,7 @@ pub fn summary_ends_with_period(content: &String) -> Result<String, String> {
     }
 }
 
-pub fn invalid_category_abbreviation(content: &String) -> Result<String, String> {
+pub fn invalid_category_abbreviation(content: &str) -> Result<String, String> {
     let category_abbreviations: Vec<String> = vec![
         "AA".to_string(),
         "AR".to_string(),
@@ -70,7 +70,7 @@ pub fn invalid_category_abbreviation(content: &String) -> Result<String, String>
         "T".to_string(),
     ];
 
-    let category_abbreviation: String = match summary_line(&content).split_ascii_whitespace().nth(0)
+    let category_abbreviation: String = match summary_line(&content).split_ascii_whitespace().next()
     {
         Some(s) => s.to_string(),
         None => {

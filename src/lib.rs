@@ -13,13 +13,13 @@ use crate::summary_checks::{
 
 use crate::body_checks::lines_over_max_length;
 
-pub fn check_commit_message(content: &String) {
+pub fn check_commit_message(content: &str) {
     output_check_results(&check_results(&content));
 
     program_exit(&check_results(&content));
 }
 
-fn check_results(content: &String) -> Vec<Result<String, String>> {
+fn check_results(content: &str) -> Vec<Result<String, String>> {
     vec![
         // entire commit message
         empty(&content),
@@ -35,7 +35,7 @@ fn check_results(content: &String) -> Vec<Result<String, String>> {
     ]
 }
 
-fn output_check_results(checks: &Vec<Result<String, String>>) {
+fn output_check_results(checks: &[Result<String, String>]) {
     for x in checks {
         match x {
             Ok(pass_message) => println!("[PASS] {}", pass_message),
@@ -44,11 +44,11 @@ fn output_check_results(checks: &Vec<Result<String, String>>) {
     }
 }
 
-fn any_failed_checks(checks: &Vec<Result<String, String>>) -> bool {
-    checks.into_iter().map(|x| x.is_err()).any(|x| x == true)
+fn any_failed_checks(checks: &[Result<String, String>]) -> bool {
+    checks.iter().map(|x| x.is_err()).any(|x| x)
 }
 
-fn program_exit(checks: &Vec<Result<String, String>>) {
+fn program_exit(checks: &[Result<String, String>]) {
     match any_failed_checks(&checks) {
         true => {
             eprintln!(
