@@ -1,5 +1,5 @@
-pub fn lines_over_max_length(content: &String) -> Result<String, String> {
-    match content.lines().skip(2).next() {
+pub fn lines_over_max_length(content: &str) -> Result<String, String> {
+    match content.lines().nth(2) {
         None => Ok("No body lines longer than 72 chacacters.".to_string()),
         Some(_) => match check_body_lines(&content) {
             false => Ok("No body lines longer than 72 chacacters.".to_string()),
@@ -8,12 +8,12 @@ pub fn lines_over_max_length(content: &String) -> Result<String, String> {
     }
 }
 
-fn check_body_lines(content: &String) -> bool {
+fn check_body_lines(content: &str) -> bool {
     content
         .lines()
         .skip(2)
         .map(|x| x.len() > 72)
-        .any(|x: bool| x == true)
+        .any(|x: bool| x)
 }
 
 #[cfg(test)]
