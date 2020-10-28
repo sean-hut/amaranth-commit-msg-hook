@@ -14,6 +14,9 @@ rust-files = src/main.rs src/lib.rs src/body_checks.rs src/entire_commit_checks.
 rust-format: $(rust-files)
 > cargo fmt -- --check --files-with-diff
 
+rust-clippy-lints: $(rust-files)
+> cargo clippy -- --deny clippy::all
+
 build: $(rust-files)
 > cargo build
 
