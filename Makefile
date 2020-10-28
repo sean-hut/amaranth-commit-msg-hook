@@ -23,6 +23,10 @@ build: $(rust-files)
 test: $(rust-files)
 > cargo test
 
+.PHONY: git-diff-check
+git-diff-check:
+> git diff --check
+
 .PHONY: clean
 clean:
 > cargo clean
