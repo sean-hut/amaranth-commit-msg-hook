@@ -11,7 +11,7 @@ rust-files = src/main.rs src/lib.rs src/body_checks.rs src/entire_commit_checks.
 # Integration Tests
 ###################
 
-all: rust-format rust-clippy-lints build test
+all: rust-format rust-clippy-lints build test git-diff-check
 
 rust-format: $(rust-files)
 > cargo fmt -- --check --files-with-diff
