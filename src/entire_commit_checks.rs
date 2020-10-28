@@ -1,11 +1,11 @@
-pub fn empty(content: &String) -> Result<String, String> {
+pub fn empty(content: &str) -> Result<String, String> {
     match content.is_empty() {
         false => Ok("Commit message is not empty.".to_string()),
         true => Err("Commit message is empty.".to_string()),
     }
 }
 
-pub fn not_ascii(content: &String) -> Result<String, String> {
+pub fn not_ascii(content: &str) -> Result<String, String> {
     match content.is_ascii() {
         true => Ok("Commit message is ASCII.".to_string()),
         false => Err("Commit message is not ASCII.".to_string()),
