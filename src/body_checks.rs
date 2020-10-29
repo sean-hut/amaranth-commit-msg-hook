@@ -1,10 +1,3 @@
-pub fn lines_over_max_length(content: &str) -> Result<String, String> {
-    match content.lines().nth(2) {
-        None => Ok("No body lines longer than 72 chacacters.".to_string()),
-        Some(_) => match check_body_lines(&content) {
-            false => Ok("No body lines longer than 72 chacacters.".to_string()),
-            true => Err("There are body lines longer than 72 chacacters.".to_string()),
-        },
 pub struct Body<'a> {
     body: Result<Vec<&'a str>, &'a str>,
 }
@@ -12,6 +5,18 @@ pub struct Body<'a> {
 pub fn body(content: &str) -> Body {
     Body {
         body: Ok(second_section(&content)),
+    }
+}
+
+impl<'a> Body<'a> {
+    pub fn max_length(&self) -> Result<&'a str, &'a str> {
+        match &self.body {
+            Ok(s) => match s.iter().map(|x| x.len() > 72).any(|x: bool| x) {
+                false => Ok("No body lines longer than 72 chacacters."),
+                true => Err("There are body lines longer than 72 chacacters."),
+            },
+            Err(e) => Err(e),
+        }
     }
 }
 
