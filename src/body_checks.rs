@@ -33,7 +33,7 @@ pub fn second_section(content: &str) -> Vec<&str> {
 #[cfg(test)]
 mod body {
 
-    use super::lines_over_max_length;
+    use super::body;
 
     #[test]
     fn lines_over_max_length_test() -> Result<(), String> {
