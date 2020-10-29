@@ -138,12 +138,10 @@ mod summary {
     }
 
     #[test]
-    fn summary_ends_with_period_test() -> Result<(), &'static str> {
-        let summary_ends_in_period: String = "D add readme.".to_string();
-
-        match summary_ends_with_period(&summary_ends_in_period) {
+    fn period_test() -> Result<(), ()> {
+        match summary("D add readme.").period() {
             Err(_) => Ok(()),
-            Ok(_) => Err("Did not error as expected."),
+            Ok(_) => Err(()),
         }
     }
 
