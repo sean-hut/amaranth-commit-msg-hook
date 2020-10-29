@@ -128,13 +128,12 @@ mod summary {
     }
 
     #[test]
-    fn summary_over_50_characters_test() -> Result<(), &'static str> {
-        let summary_line_to_long: String =
-            "D add overview, dependencies, changelog, license to readme".to_string();
-
-        match summary_over_50_characters(&summary_line_to_long) {
+    fn over_max_length_test() -> Result<(), ()> {
+        match summary("D add overview, dependencies, changelog, license to readme")
+            .over_max_length()
+        {
             Err(_) => Ok(()),
-            Ok(_) => Err("Did not error as expected."),
+            Ok(_) => Err(()),
         }
     }
 
