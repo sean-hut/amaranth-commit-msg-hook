@@ -59,4 +59,17 @@ Readme includes: overview, dependencies, license and semantic verisoning. ";
             Ok(_) => Err(()),
         }
     }
+
+    #[test]
+    fn footer_lines_test() -> Result<(), ()> {
+        let footer_lines: &str = "D add readme
+
+Readme includes: overview, dependencies, license and semantic verisoning.
+Resolves: <issue-id>";
+
+        match body(&footer_lines).footer_lines() {
+            Err(_) => Ok(()),
+            Ok(_) => Err(()),
+        }
+    }
 }
