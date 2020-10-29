@@ -101,10 +101,7 @@ fn first_word(content: &str) -> Result<&str, &str> {
 #[cfg(test)]
 mod summary {
 
-    use super::{
-        first_summary_word_not_imperative_mood, first_summary_word_not_lowercase,
-        invalid_category_abbreviation, summary_ends_with_period, summary_over_50_characters,
-    };
+    use super::summary;
 
     #[test]
     fn first_summary_word_not_lowercase_test() -> Result<(), &'static str> {
