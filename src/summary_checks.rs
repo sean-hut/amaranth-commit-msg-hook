@@ -47,16 +47,20 @@ impl<'a> Summary<'a> {
         }
     }
 
-pub fn summary_over_50_characters(content: &str) -> Result<String, String> {
-    if summary_line(content).len() < 50 {
-        Ok("Summary line is less than 50 characters.".to_string())
-    } else {
-        Err("Summary line is more than 50 characters.".to_string())
     }
-}
 
 pub fn summary_ends_with_period(content: &str) -> Result<String, String> {
     let ends_with_period: bool = summary_line(&content).ends_with('.');
+    pub fn over_max_length(&self) -> Result<&'a str, &'a str> {
+        match self.summary_line {
+            Ok(s) => match s.len() < 50 {
+                true => Ok("Summary line is less than 50 characters."),
+                false => Err("Summary line is more than 50 characters."),
+            },
+            Err(e) => Err(e),
+        }
+    }
+}
 
     match ends_with_period {
         false => Ok("Summary line does not end in a period.".to_string()),
