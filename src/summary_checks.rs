@@ -12,12 +12,6 @@ pub fn summary(content: &str) -> Summary {
     }
 }
 
-fn first_summary_word(content: &str) -> String {
-    match summary_line(&content).split_ascii_whitespace().nth(1) {
-        Some(s) => s.to_string(),
-        None => {
-            eprintln!("ERROR: Commit message summary line needs to be more than just a category abbreviation.");
-            exit(2);
         }
     }
 }
@@ -94,6 +88,15 @@ pub fn invalid_category_abbreviation(content: &str) -> Result<String, String> {
     match valid_category_abbreviation {
         true => Ok("Valid category abbreviation.".to_string()),
         false => Err("Invalid category abbreviation.".to_string()),
+fn first_word(content: &str) -> Result<&str, &str> {
+    match summary_line(&content) {
+        Ok(s) => match s.split_ascii_whitespace().nth(1) {
+            Some(s) => Ok(s),
+            None => Err(
+                "Commit message summary line must to be more than just a category abbreviation.",
+            ),
+        },
+        Err(e) => Err(e),
     }
 }
 
