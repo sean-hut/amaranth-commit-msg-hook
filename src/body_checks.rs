@@ -15,8 +15,6 @@ pub fn body(content: &str) -> Body {
     }
 }
 
-fn check_body_lines(content: &str) -> bool {
-    content
         .lines()
         .skip(2)
         .map(|x| x.len() > 72)
