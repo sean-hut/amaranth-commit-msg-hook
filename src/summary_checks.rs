@@ -146,12 +146,10 @@ mod summary {
     }
 
     #[test]
-    fn invalid_category_abbreviation_test() -> Result<(), &'static str> {
-        let category_abbreviation_invalid: String = "Z add readme".to_string();
-
-        match invalid_category_abbreviation(&category_abbreviation_invalid) {
+    fn category_abbreviation_test() -> Result<(), ()> {
+        match summary("Z add readme").category_abbreviation() {
             Err(_) => Ok(()),
-            Ok(_) => Err("Did not error as expected."),
+            Ok(_) => Err(()),
         }
     }
 }
