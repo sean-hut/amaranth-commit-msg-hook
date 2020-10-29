@@ -37,13 +37,15 @@ impl<'a> Summary<'a> {
         }
     }
 
-pub fn first_summary_word_not_imperative_mood(content: &str) -> Result<String, String> {
-    match first_summary_word(content).ends_with("ed") || first_summary_word(content).ends_with("es")
-    {
-        true => Err("Summary does not use imperative mood.".to_string()),
-        false => Ok("Summary uses imperative mood.".to_string()),
+    pub fn first_word_imperative_mood(&self) -> Result<&'a str, &'a str> {
+        match self.first_word {
+            Ok(s) => match s.ends_with("ed") || s.ends_with("es") {
+                true => Err("Summary does not use imperative mood."),
+                false => Ok("Summary uses imperative mood."),
+            },
+            Err(e) => Err(e),
+        }
     }
-}
 
 pub fn summary_over_50_characters(content: &str) -> Result<String, String> {
     if summary_line(content).len() < 50 {
