@@ -104,12 +104,10 @@ mod summary {
     use super::summary;
 
     #[test]
-    fn first_summary_word_not_lowercase_test() -> Result<(), &'static str> {
-        let not_lowercase_first_word: String = "D Add readme".to_string();
-
-        match first_summary_word_not_lowercase(&not_lowercase_first_word) {
+    fn first_word_lowercase_test() -> Result<(), ()> {
+        match summary("D Add readme").first_word_lowercase() {
             Err(_) => Ok(()),
-            Ok(_) => Err("Did not error as expected."),
+            Ok(_) => Err(()),
         }
     }
 
