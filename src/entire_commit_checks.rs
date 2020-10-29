@@ -18,22 +18,18 @@ mod entire_commit {
     use super::{empty, not_ascii};
 
     #[test]
-    fn empty_test() -> Result<(), String> {
-        let empty_message: String = "".to_string();
-
-        match empty(&empty_message) {
+    fn empty_test() -> Result<(), ()> {
+        match empty("") {
             Err(_) => Ok(()),
-            Ok(_) => Err("Did not error as expected.".to_string()),
+            Ok(_) => Err(()),
         }
     }
 
     #[test]
-    fn not_ascii_test() -> Result<(), String> {
-        let not_ascii_message: String = "❤".to_string();
-
-        match not_ascii(&not_ascii_message) {
+    fn not_ascii_test() -> Result<(), ()> {
+        match not_ascii("❤") {
             Err(_) => Ok(()),
-            Ok(_) => Err("Did not error as expected.".to_string()),
+            Ok(_) => Err(()),
         }
     }
 }
