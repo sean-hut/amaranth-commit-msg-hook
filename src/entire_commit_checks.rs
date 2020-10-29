@@ -1,14 +1,14 @@
-pub fn empty(content: &str) -> Result<String, String> {
+pub fn empty(content: &str) -> Result<&str, &str> {
     match content.is_empty() {
-        false => Ok("Commit message is not empty.".to_string()),
-        true => Err("Commit message is empty.".to_string()),
+        false => Ok("Commit message is not empty."),
+        true => Err("Commit message is empty."),
     }
 }
 
-pub fn not_ascii(content: &str) -> Result<String, String> {
+pub fn not_ascii(content: &str) -> Result<&str, &str> {
     match content.is_ascii() {
-        true => Ok("Commit message is ASCII.".to_string()),
-        false => Err("Commit message is not ASCII.".to_string()),
+        true => Ok("Commit message is ASCII."),
+        false => Err("Commit message is not ASCII."),
     }
 }
 
@@ -18,22 +18,18 @@ mod entire_commit {
     use super::{empty, not_ascii};
 
     #[test]
-    fn empty_test() -> Result<(), String> {
-        let empty_message: String = "".to_string();
-
-        match empty(&empty_message) {
+    fn empty_test() -> Result<(), ()> {
+        match empty("") {
             Err(_) => Ok(()),
-            Ok(_) => Err("Did not error as expected.".to_string()),
+            Ok(_) => Err(()),
         }
     }
 
     #[test]
-    fn not_ascii_test() -> Result<(), String> {
-        let not_ascii_message: String = "❤".to_string();
-
-        match not_ascii(&not_ascii_message) {
+    fn not_ascii_test() -> Result<(), ()> {
+        match not_ascii("❤") {
             Err(_) => Ok(()),
-            Ok(_) => Err("Did not error as expected.".to_string()),
+            Ok(_) => Err(()),
         }
     }
 }
