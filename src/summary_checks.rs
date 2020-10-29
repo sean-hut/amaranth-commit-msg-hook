@@ -4,13 +4,6 @@ pub struct Summary<'a> {
     first_word: Result<&'a str, &'a str>,
 }
 
-fn summary_line(content: &str) -> String {
-    match content.lines().next() {
-        Some(summary_line) => summary_line.to_string(),
-        None => {
-            eprintln!("ERROR: Commit message does not have a summary line.");
-            exit(2);
-        }
 pub fn summary(content: &str) -> Summary {
     Summary {
         summary_line: summary_line(&content),
@@ -58,6 +51,10 @@ pub fn summary_ends_with_period(content: &str) -> Result<String, String> {
     match ends_with_period {
         false => Ok("Summary line does not end in a period.".to_string()),
         true => Err("Summary line end in a period.".to_string()),
+fn summary_line(content: &str) -> Result<&str, &str> {
+    match content.lines().next() {
+        Some(s) => Ok(s),
+        None => Err("Commit message does not have a summary line."),
     }
 }
 
