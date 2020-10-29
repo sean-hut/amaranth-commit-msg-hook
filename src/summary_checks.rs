@@ -47,10 +47,16 @@ impl<'a> Summary<'a> {
         }
     }
 
+    pub fn period(&self) -> Result<&'a str, &'a str> {
+        match self.summary_line {
+            Ok(s) => match s.ends_with('.') {
+                false => Ok("Summary line does not end in a period."),
+                true => Err("Summary line end in a period."),
+            },
+            Err(e) => Err(e),
+        }
     }
 
-pub fn summary_ends_with_period(content: &str) -> Result<String, String> {
-    let ends_with_period: bool = summary_line(&content).ends_with('.');
     pub fn over_max_length(&self) -> Result<&'a str, &'a str> {
         match self.summary_line {
             Ok(s) => match s.len() < 50 {
@@ -62,9 +68,6 @@ pub fn summary_ends_with_period(content: &str) -> Result<String, String> {
     }
 }
 
-    match ends_with_period {
-        false => Ok("Summary line does not end in a period.".to_string()),
-        true => Err("Summary line end in a period.".to_string()),
 fn summary_line(content: &str) -> Result<&str, &str> {
     match content.lines().next() {
         Some(s) => Ok(s),
