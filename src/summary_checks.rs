@@ -12,6 +12,18 @@ pub fn summary(content: &str) -> Summary {
     }
 }
 
+impl<'a> Summary<'a> {
+    pub fn category_abbreviation(&self) -> Result<&'a str, &'a str> {
+        let category_abbreviations: Vec<&str> = vec![
+            "AA", "AR", "B", "BF", "C", "CT", "D", "DD", "IV", "M", "R", "RD", "RV", "T",
+        ];
+
+        match self.category_abbreviation {
+            Ok(s) => match category_abbreviations.iter().any(|x| x == &s) {
+                true => Ok("Valid category abbreviation."),
+                false => Err("Invalid category abbreviation."),
+            },
+            Err(e) => Err(e),
         }
     }
 }
@@ -52,42 +64,17 @@ fn summary_line(content: &str) -> Result<&str, &str> {
     }
 }
 
-pub fn invalid_category_abbreviation(content: &str) -> Result<String, String> {
-    let category_abbreviations: Vec<String> = vec![
-        "AA".to_string(),
-        "AR".to_string(),
-        "B".to_string(),
-        "BF".to_string(),
-        "C".to_string(),
-        "CT".to_string(),
-        "D".to_string(),
-        "DD".to_string(),
-        "IV".to_string(),
-        "M".to_string(),
-        "R".to_string(),
-        "RD".to_string(),
-        "RV".to_string(),
-        "T".to_string(),
-    ];
+fn category_abbreviation(content: &str) -> Result<&str, &str> {
+    match summary_line(&content) {
+        Ok(s) => match s.split_ascii_whitespace().next() {
+            Some(s) => Ok(s),
+            None => Err("Commit message summary line needs to start with a category abbreviation."),
+        },
 
-    let category_abbreviation: String = match summary_line(&content).split_ascii_whitespace().next()
-    {
-        Some(s) => s.to_string(),
-        None => {
-            eprintln!(
-                "ERROR: Commit message summary line needs to start with a category abbreviation."
-            );
-            exit(2);
-        }
-    };
+        Err(e) => Err(e),
+    }
+}
 
-    let valid_category_abbreviation: bool = category_abbreviations
-        .iter()
-        .any(|x| x == &category_abbreviation);
-
-    match valid_category_abbreviation {
-        true => Ok("Valid category abbreviation.".to_string()),
-        false => Err("Invalid category abbreviation.".to_string()),
 fn first_word(content: &str) -> Result<&str, &str> {
     match summary_line(&content) {
         Ok(s) => match s.split_ascii_whitespace().nth(1) {
