@@ -1,3 +1,8 @@
+pub struct Summary<'a> {
+    summary_line: Result<&'a str, &'a str>,
+    category_abbreviation: Result<&'a str, &'a str>,
+    first_word: Result<&'a str, &'a str>,
+}
 
 fn summary_line(content: &str) -> String {
     match content.lines().next() {
