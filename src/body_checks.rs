@@ -11,7 +11,7 @@ pub fn body(content: &str) -> Body {
 impl<'a> Body<'a> {
     pub fn max_length(&self) -> Result<&'a str, &'a str> {
         match &self.body {
-            Ok(s) => match s.iter().map(|x| x.len() > 72).any(|x: bool| x) {
+            Ok(body) => match body.iter().map(|x| x.len() > 72).any(|x: bool| x) {
                 false => Ok("No body lines longer than 72 chacacters."),
                 true => Err("There are body lines longer than 72 chacacters."),
             },
