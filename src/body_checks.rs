@@ -20,10 +20,14 @@ impl<'a> Body<'a> {
     }
 }
 
+pub fn second_section(content: &str) -> Vec<&str> {
+    let section: Vec<&str> = content
         .lines()
         .skip(2)
-        .map(|x| x.len() > 72)
-        .any(|x: bool| x)
+        .take_while(|x| !x.is_empty())
+        .collect();
+
+    section
 }
 
 #[cfg(test)]
