@@ -5,6 +5,10 @@ pub fn lines_over_max_length(content: &str) -> Result<String, String> {
             false => Ok("No body lines longer than 72 chacacters.".to_string()),
             true => Err("There are body lines longer than 72 chacacters.".to_string()),
         },
+pub struct Body<'a> {
+    body: Result<Vec<&'a str>, &'a str>,
+}
+
     }
 }
 
