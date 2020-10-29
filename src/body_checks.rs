@@ -9,6 +9,9 @@ pub struct Body<'a> {
     body: Result<Vec<&'a str>, &'a str>,
 }
 
+pub fn body(content: &str) -> Body {
+    Body {
+        body: Ok(second_section(&content)),
     }
 }
 
