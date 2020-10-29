@@ -18,6 +18,19 @@ impl<'a> Body<'a> {
             Err(e) => Err(e),
         }
     }
+
+    pub fn footer_lines(&self) -> Result<&'a str, &'a str> {
+        match &self.body {
+            Ok(body) => match body
+                .iter()
+                .any(|x| x.starts_with("Resolves:") || x.starts_with("See also:"))
+            {
+                false => Ok("The body section contains no footer lines."),
+                true => Err("The body section contains footer lines."),
+            },
+            Err(e) => Err(e),
+        }
+    }
 }
 
 pub fn second_section(content: &str) -> Vec<&str> {
