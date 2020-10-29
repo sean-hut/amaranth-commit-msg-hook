@@ -26,14 +26,16 @@ impl<'a> Summary<'a> {
             Err(e) => Err(e),
         }
     }
-}
 
-pub fn first_summary_word_not_lowercase(content: &str) -> Result<String, String> {
-    match first_summary_word(content).to_ascii_lowercase() == first_summary_word(content) {
-        true => Ok("First word in summary line is lowercase.".to_string()),
-        false => Err("First word in summary line is not lowercase.".to_string()),
+    pub fn first_word_lowercase(&self) -> Result<&'a str, &'a str> {
+        match self.first_word {
+            Ok(s) => match &s.to_ascii_lowercase()[..] == s {
+                true => Ok("First word in summary line is lowercase."),
+                false => Err("First word in summary line is not lowercase."),
+            },
+            Err(e) => Err(e),
+        }
     }
-}
 
 pub fn first_summary_word_not_imperative_mood(content: &str) -> Result<String, String> {
     match first_summary_word(content).ends_with("ed") || first_summary_word(content).ends_with("es")
