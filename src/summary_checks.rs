@@ -1,4 +1,3 @@
-use std::process::exit;
 
 fn summary_line(content: &str) -> String {
     match content.lines().next() {
