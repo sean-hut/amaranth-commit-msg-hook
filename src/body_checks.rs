@@ -36,15 +36,14 @@ mod body {
     use super::body;
 
     #[test]
-    fn lines_over_max_length_test() -> Result<(), String> {
-        let line_over_max: String = "D add readme
+    fn max_length_test() -> Result<(), ()> {
+        let over_max: &str = "D add readme
 
-Readme includes: overview, dependencies, license and semantic verisoning. "
-            .to_string();
+Readme includes: overview, dependencies, license and semantic verisoning. ";
 
-        match lines_over_max_length(&line_over_max) {
+        match body(&over_max).max_length() {
             Err(_) => Ok(()),
-            Ok(_) => Err("Did not error as expected.".to_string()),
+            Ok(_) => Err(()),
         }
     }
 }
