@@ -112,22 +112,18 @@ mod summary {
     }
 
     #[test]
-    fn first_summary_word_not_imperative_mood_added_test() -> Result<(), &'static str> {
-        let not_imperative_mood_added: String = "D added readme".to_string();
-
-        match first_summary_word_not_imperative_mood(&not_imperative_mood_added) {
+    fn first_word_imperative_mood_added_test() -> Result<(), ()> {
+        match summary("D added readme").first_word_imperative_mood() {
             Err(_) => Ok(()),
-            Ok(_) => Err("Did not error as expected."),
+            Ok(_) => Err(()),
         }
     }
 
     #[test]
-    fn first_summary_word_not_imperative_mood_addes_test() -> Result<(), &'static str> {
-        let not_imperative_mood_addes: String = "D addes readme".to_string();
-
-        match first_summary_word_not_imperative_mood(&not_imperative_mood_addes) {
+    fn first_word_imperative_mood_fixes_test() -> Result<(), ()> {
+        match summary("D fixes readme").first_word_imperative_mood() {
             Err(_) => Ok(()),
-            Ok(_) => Err("Did not error as expected."),
+            Ok(_) => Err(()),
         }
     }
 
