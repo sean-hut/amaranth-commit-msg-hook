@@ -11,6 +11,11 @@ fn summary_line(content: &str) -> String {
             eprintln!("ERROR: Commit message does not have a summary line.");
             exit(2);
         }
+pub fn summary(content: &str) -> Summary {
+    Summary {
+        summary_line: summary_line(&content),
+        category_abbreviation: category_abbreviation(&content),
+        first_word: first_word(&content),
     }
 }
 
