@@ -39,3 +39,8 @@ fn program_exit(checks: &[Result<&str, &str>]) {
         }
     }
 }
+
+fn number_of_blank_lines(content: &str) -> usize {
+    content.lines().filter(|x| x.is_empty()).count()
+}
+
