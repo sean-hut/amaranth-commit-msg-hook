@@ -17,7 +17,7 @@ pub fn check_commit_message(content: &str) {
 
 }
 
-fn output_check_results(checks: &[Result<String, String>]) {
+fn output_check_results(checks: &[Result<&str, &str>]) {
     for x in checks {
         match x {
             Ok(pass_message) => println!("[PASS] {}", pass_message),
