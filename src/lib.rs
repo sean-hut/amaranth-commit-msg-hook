@@ -44,3 +44,92 @@ fn number_of_blank_lines(content: &str) -> usize {
     content.lines().filter(|x| x.is_empty()).count()
 }
 
+fn check_results(content: &str) -> Vec<Result<&str, &str>> {
+    let blank_lines = number_of_blank_lines(&content);
+    let summary = summary(&content);
+    let body = body(&content);
+    let footer = footer(&content, blank_lines);
+
+    if blank_lines == 1 {
+        vec![
+            // entire commit message
+            empty(&content),
+            not_ascii(&content),
+            // summary checks
+            summary.category_abbreviation(),
+            summary.first_word_lowercase(),
+            summary.first_word_imperative_mood(),
+            summary.period(),
+            summary.over_max_length(),
+            summary.first_word_lowercase(),
+        ]
+    } else if blank_lines == 2
+        && !second_section(&content)
+            .iter()
+            .all(|x| x.starts_with("Resolves:") || x.starts_with("See also:"))
+    {
+        vec![
+            // entire commit message
+            empty(&content),
+            not_ascii(&content),
+            // summary checks
+            summary.category_abbreviation(),
+            summary.first_word_lowercase(),
+            summary.first_word_imperative_mood(),
+            summary.period(),
+            summary.over_max_length(),
+            summary.first_word_lowercase(),
+            // body checks
+            body.max_length(),
+            body.footer_lines(),
+        ]
+    } else if blank_lines == 2
+        && second_section(&content)
+            .iter()
+            .all(|x| x.starts_with("Resolves:") || x.starts_with("See also:"))
+    {
+        vec![
+            // entire commit message
+            empty(&content),
+            not_ascii(&content),
+            // summary checks
+            summary.category_abbreviation(),
+            summary.first_word_lowercase(),
+            summary.first_word_imperative_mood(),
+            summary.period(),
+            summary.over_max_length(),
+            summary.first_word_lowercase(),
+            // footer checks
+            footer.max_length(),
+            footer.all_footer_lines(),
+        ]
+    } else if blank_lines == 3
+        && !second_section(&content)
+            .iter()
+            .all(|x| x.starts_with("Resolves:") || x.starts_with("See also:"))
+        && third_section(&content)
+            .iter()
+            .all(|x| x.starts_with("Resolves:") || x.starts_with("See also:"))
+    {
+        vec![
+            // entire commit message
+            empty(&content),
+            not_ascii(&content),
+            // summary checks
+            summary.category_abbreviation(),
+            summary.first_word_lowercase(),
+            summary.first_word_imperative_mood(),
+            summary.period(),
+            summary.over_max_length(),
+            summary.first_word_lowercase(),
+            // body checks
+            body.max_length(),
+            body.footer_lines(),
+            // footer checks
+            footer.max_length(),
+            footer.all_footer_lines(),
+        ]
+    } else {
+        vec![Err("Invalid commit structure.")]
+    }
+}
