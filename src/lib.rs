@@ -15,20 +15,6 @@ pub fn check_commit_message(content: &str) {
     program_exit(&check_results(&content));
 }
 
-fn check_results(content: &str) -> Vec<Result<String, String>> {
-    vec![
-        // entire commit message
-        empty(&content),
-        not_ascii(&content),
-        // summary checks
-        invalid_category_abbreviation(&content),
-        summary_ends_with_period(&content),
-        summary_over_50_characters(&content),
-        first_summary_word_not_lowercase(&content),
-        first_summary_word_not_imperative_mood(&content),
-        // body checks
-        lines_over_max_length(&content),
-    ]
 }
 
 fn output_check_results(checks: &[Result<String, String>]) {
