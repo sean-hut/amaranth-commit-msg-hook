@@ -1,17 +1,13 @@
-pub mod body_checks;
-pub mod entire_commit_checks;
-pub mod summary_checks;
+pub mod checks;
 
 use std::process::exit;
 
-use crate::entire_commit_checks::{empty, not_ascii};
-
-use crate::summary_checks::{
-    first_summary_word_not_imperative_mood, first_summary_word_not_lowercase,
-    invalid_category_abbreviation, summary_ends_with_period, summary_over_50_characters,
+use crate::checks::{
+    body::{body, second_section},
+    entire::{empty, not_ascii},
+    footer::{footer, third_section},
+    summary::summary,
 };
-
-use crate::body_checks::lines_over_max_length;
 
 pub fn check_commit_message(content: &str) {
     output_check_results(&check_results(&content));
