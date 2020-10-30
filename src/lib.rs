@@ -26,12 +26,8 @@ fn output_check_results(checks: &[Result<&str, &str>]) {
     }
 }
 
-fn any_failed_checks(checks: &[Result<String, String>]) -> bool {
-    checks.iter().map(|x| x.is_err()).any(|x| x)
-}
-
-fn program_exit(checks: &[Result<String, String>]) {
-    match any_failed_checks(&checks) {
+fn program_exit(checks: &[Result<&str, &str>]) {
+    match checks.iter().map(|x| x.is_err()).any(|x| x) {
         true => {
             eprintln!(
                 "Error: The commit message failed to pass all the Amaranth commit message checks."
