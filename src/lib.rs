@@ -10,11 +10,11 @@ use crate::checks::{
 };
 
 pub fn check_commit_message(content: &str) {
-    output_check_results(&check_results(&content));
+    let results = check_results(&content);
 
-    program_exit(&check_results(&content));
-}
+    output_check_results(&results);
 
+    program_exit(&results);
 }
 
 fn output_check_results(checks: &[Result<&str, &str>]) {
