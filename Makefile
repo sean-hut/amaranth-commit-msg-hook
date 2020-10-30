@@ -5,7 +5,10 @@
 # Internal variables
 ####################
 
-rust-files = src/main.rs src/lib.rs src/body_checks.rs src/entire_commit_checks.rs src/summary_checks.rs
+main = src/main.rs
+lib = src/lib.rs
+checks = src/checks/body.rs src/checks/entire.rs src/checks/summary.rs src/checks/footer.rs
+rust-files = $(main) $(lib) $(checks)
 
 ###################
 # Integration Tests
