@@ -42,10 +42,10 @@ fn program_exit(checks: &[Result<&str, &str>]) {
 }
 
 fn check_results(content: &str) -> Vec<Result<&str, &str>> {
-    let summary = summary(&content);
-    let body = body(&content);
-    let footer = footer(&content, blank_lines);
     let blank_lines = content.lines().filter(|x| x.is_empty()).count();
+    let summary = Summary::summary(&content);
+    let body = Body::body(&content);
+    let footer = Footer::footer(&content, blank_lines);
     let sign_off = SignOff::sign_off(&content, blank_lines);
 
     let summary_and_sign_off: bool = blank_lines == 2;
@@ -73,7 +73,7 @@ fn check_results(content: &str) -> Vec<Result<&str, &str>> {
             empty(&content),
             not_ascii(&content),
             // summary checks
-            summary.category_abbreviation(),
+            summary.valid_category_abbreviation(),
             summary.first_word_lowercase(),
             summary.first_word_imperative_mood(),
             summary.period(),
@@ -88,7 +88,7 @@ fn check_results(content: &str) -> Vec<Result<&str, &str>> {
             empty(&content),
             not_ascii(&content),
             // summary checks
-            summary.category_abbreviation(),
+            summary.valid_category_abbreviation(),
             summary.first_word_lowercase(),
             summary.first_word_imperative_mood(),
             summary.period(),
@@ -106,7 +106,7 @@ fn check_results(content: &str) -> Vec<Result<&str, &str>> {
             empty(&content),
             not_ascii(&content),
             // summary checks
-            summary.category_abbreviation(),
+            summary.valid_category_abbreviation(),
             summary.first_word_lowercase(),
             summary.first_word_imperative_mood(),
             summary.period(),
@@ -124,7 +124,7 @@ fn check_results(content: &str) -> Vec<Result<&str, &str>> {
             empty(&content),
             not_ascii(&content),
             // summary checks
-            summary.category_abbreviation(),
+            summary.valid_category_abbreviation(),
             summary.first_word_lowercase(),
             summary.first_word_imperative_mood(),
             summary.period(),
