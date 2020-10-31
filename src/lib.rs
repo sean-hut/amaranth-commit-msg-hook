@@ -46,6 +46,7 @@ fn check_results(content: &str) -> Vec<Result<&str, &str>> {
     let summary = summary(&content);
     let body = body(&content);
     let footer = footer(&content, blank_lines);
+    let sign_off = SignOff::sign_off(&content, blank_lines);
 
     let summary_and_sign_off: bool = blank_lines == 2;
     let summary_body_and_sign_off: bool = blank_lines == 3
@@ -78,6 +79,8 @@ fn check_results(content: &str) -> Vec<Result<&str, &str>> {
             summary.period(),
             summary.over_max_length(),
             summary.first_word_lowercase(),
+            //sign off
+            sign_off.sign_off_line(),
         ]
     } else if summary_body_and_sign_off {
         vec![
@@ -94,6 +97,8 @@ fn check_results(content: &str) -> Vec<Result<&str, &str>> {
             // body checks
             body.max_length(),
             body.footer_lines(),
+            //sign off
+            sign_off.sign_off_line(),
         ]
     } else if summary_footer_and_sign_off {
         vec![
@@ -110,6 +115,8 @@ fn check_results(content: &str) -> Vec<Result<&str, &str>> {
             // footer checks
             footer.max_length(),
             footer.all_footer_lines(),
+            //sign off
+            sign_off.sign_off_line(),
         ]
     } else if summary_body_footer_and_sign_off {
         vec![
@@ -129,6 +136,8 @@ fn check_results(content: &str) -> Vec<Result<&str, &str>> {
             // footer checks
             footer.max_length(),
             footer.all_footer_lines(),
+            //sign off
+            sign_off.sign_off_line(),
         ]
     } else {
         vec![Err("Invalid commit message structure.")]
