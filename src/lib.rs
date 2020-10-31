@@ -47,7 +47,8 @@ fn check_results(content: &str) -> Vec<Result<&str, &str>> {
     let body = body(&content);
     let footer = footer(&content, blank_lines);
 
-    if blank_lines == 1 {
+    let summary_and_sign_off: bool = blank_lines == 2;
+    if summary_and_sign_off {
         vec![
             // entire commit message
             empty(&content),
