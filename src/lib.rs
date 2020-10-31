@@ -54,6 +54,10 @@ fn check_results(content: &str) -> Vec<Result<&str, &str>> {
                 || x.starts_with("See also:")
                 || x.starts_with("Signed-off-by:")
         });
+    let summary_footer_and_sign_off: bool = blank_lines == 3
+        && second_section(&content)
+            .iter()
+            .all(|x| x.starts_with("Resolves:") || x.starts_with("See also:"));
     if summary_and_sign_off {
         vec![
             // entire commit message
@@ -83,11 +87,7 @@ fn check_results(content: &str) -> Vec<Result<&str, &str>> {
             body.max_length(),
             body.footer_lines(),
         ]
-    } else if blank_lines == 2
-        && second_section(&content)
-            .iter()
-            .all(|x| x.starts_with("Resolves:") || x.starts_with("See also:"))
-    {
+    } else if summary_footer_and_sign_off {
         vec![
             // entire commit message
             empty(&content),
