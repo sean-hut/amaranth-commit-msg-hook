@@ -4,16 +4,48 @@ pub struct Summary<'a> {
     first_word: Result<&'a str, &'a str>,
 }
 
-pub fn summary(content: &str) -> Summary {
-    Summary {
-        summary_line: summary_line(&content),
-        category_abbreviation: category_abbreviation(&content),
-        first_word: first_word(&content),
-    }
-}
-
 impl<'a> Summary<'a> {
-    pub fn category_abbreviation(&self) -> Result<&'a str, &'a str> {
+    pub fn summary(content: &str) -> Summary {
+        Summary {
+            summary_line: Summary::summary_line(&content),
+            category_abbreviation: Summary::category_abbreviation(&content),
+            first_word: Summary::first_word(&content),
+        }
+    }
+
+    fn summary_line(content: &str) -> Result<&str, &str> {
+        match content.lines().next() {
+            Some(s) => Ok(s),
+            None => Err("Commit message does not have a summary line."),
+        }
+    }
+
+    fn category_abbreviation(content: &str) -> Result<&str, &str> {
+        match Summary::summary_line(&content) {
+            Ok(s) => match s.split_ascii_whitespace().next() {
+                Some(s) => Ok(s),
+                None => {
+                    Err("Commit message summary line needs to start with a category abbreviation.")
+                }
+            },
+
+            Err(e) => Err(e),
+        }
+    }
+
+    fn first_word(content: &str) -> Result<&str, &str> {
+        match Summary::summary_line(&content) {
+            Ok(s) => match s.split_ascii_whitespace().nth(1) {
+                Some(s) => Ok(s),
+                None => Err(
+                    "Commit message summary line must to be more than just a category abbreviation.",
+                ),
+            },
+            Err(e) => Err(e),
+        }
+    }
+
+    pub fn valid_category_abbreviation(&self) -> Result<&'a str, &'a str> {
         let category_abbreviations: Vec<&str> = vec![
             "AA", "AR", "B", "BF", "C", "CT", "D", "DD", "IV", "M", "R", "RD", "RV", "T",
         ];
@@ -68,44 +100,14 @@ impl<'a> Summary<'a> {
     }
 }
 
-fn summary_line(content: &str) -> Result<&str, &str> {
-    match content.lines().next() {
-        Some(s) => Ok(s),
-        None => Err("Commit message does not have a summary line."),
-    }
-}
-
-fn category_abbreviation(content: &str) -> Result<&str, &str> {
-    match summary_line(&content) {
-        Ok(s) => match s.split_ascii_whitespace().next() {
-            Some(s) => Ok(s),
-            None => Err("Commit message summary line needs to start with a category abbreviation."),
-        },
-
-        Err(e) => Err(e),
-    }
-}
-
-fn first_word(content: &str) -> Result<&str, &str> {
-    match summary_line(&content) {
-        Ok(s) => match s.split_ascii_whitespace().nth(1) {
-            Some(s) => Ok(s),
-            None => Err(
-                "Commit message summary line must to be more than just a category abbreviation.",
-            ),
-        },
-        Err(e) => Err(e),
-    }
-}
-
 #[cfg(test)]
 mod summary {
 
-    use super::summary;
+    use super::Summary;
 
     #[test]
     fn first_word_lowercase_test() -> Result<(), ()> {
-        match summary("D Add readme").first_word_lowercase() {
+        match Summary::summary("D Add readme").first_word_lowercase() {
             Err(_) => Ok(()),
             Ok(_) => Err(()),
         }
@@ -113,7 +115,7 @@ mod summary {
 
     #[test]
     fn first_word_imperative_mood_added_test() -> Result<(), ()> {
-        match summary("D added readme").first_word_imperative_mood() {
+        match Summary::summary("D added readme").first_word_imperative_mood() {
             Err(_) => Ok(()),
             Ok(_) => Err(()),
         }
@@ -121,7 +123,7 @@ mod summary {
 
     #[test]
     fn first_word_imperative_mood_fixes_test() -> Result<(), ()> {
-        match summary("D fixes readme").first_word_imperative_mood() {
+        match Summary::summary("D fixes readme").first_word_imperative_mood() {
             Err(_) => Ok(()),
             Ok(_) => Err(()),
         }
@@ -129,7 +131,7 @@ mod summary {
 
     #[test]
     fn over_max_length_test() -> Result<(), ()> {
-        match summary("D add overview, dependencies, changelog, license to readme")
+        match Summary::summary("D add overview, dependencies, changelog, license to readme")
             .over_max_length()
         {
             Err(_) => Ok(()),
@@ -139,15 +141,15 @@ mod summary {
 
     #[test]
     fn period_test() -> Result<(), ()> {
-        match summary("D add readme.").period() {
+        match Summary::summary("D add readme.").period() {
             Err(_) => Ok(()),
             Ok(_) => Err(()),
         }
     }
 
     #[test]
-    fn category_abbreviation_test() -> Result<(), ()> {
-        match summary("Z add readme").category_abbreviation() {
+    fn valid_category_abbreviation_test() -> Result<(), ()> {
+        match Summary::summary("Z add readme").valid_category_abbreviation() {
             Err(_) => Ok(()),
             Ok(_) => Err(()),
         }
