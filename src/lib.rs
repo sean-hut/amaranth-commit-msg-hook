@@ -42,10 +42,10 @@ fn program_exit(checks: &[Result<&str, &str>]) {
 }
 
 fn check_results(content: &str) -> Vec<Result<&str, &str>> {
-    let blank_lines = number_of_blank_lines(&content);
     let summary = summary(&content);
     let body = body(&content);
     let footer = footer(&content, blank_lines);
+    let blank_lines = content.lines().filter(|x| x.is_empty()).count();
     let sign_off = SignOff::sign_off(&content, blank_lines);
 
     let summary_and_sign_off: bool = blank_lines == 2;
