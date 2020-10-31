@@ -41,7 +41,7 @@ fn program_exit(checks: &[Result<&str, &str>]) {
     }
 }
 
-fn check_results(content: &str) -> Vec<Result<&str, &str>> {
+pub fn check_results(content: &str) -> Vec<Result<&str, &str>> {
     let blank_lines = content.lines().filter(|x| x.is_empty()).count();
     let summary = Summary::summary(&content);
     let body = Body::body(&content);
