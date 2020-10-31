@@ -31,12 +31,12 @@ fn program_exit(checks: &[Result<&str, &str>]) {
     match checks.iter().map(|x| x.is_err()).any(|x| x) {
         true => {
             eprintln!(
-                "Error: The commit message failed to pass all the Amaranth commit message checks."
+                "[Error] The commit message does not conform to the Amaranth commit message format."
             );
             exit(1);
         }
         false => {
-            println!("[Success] The commit message passed all the Amaranth commit message checks.")
+            println!("[Success] The commit message conforms to the Amaranth commit message format.")
         }
     }
 }
@@ -131,6 +131,6 @@ fn check_results(content: &str) -> Vec<Result<&str, &str>> {
             footer.all_footer_lines(),
         ]
     } else {
-        vec![Err("Invalid commit structure.")]
+        vec![Err("Invalid commit message structure.")]
     }
 }
