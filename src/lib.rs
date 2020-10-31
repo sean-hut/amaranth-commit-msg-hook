@@ -3,10 +3,11 @@ pub mod checks;
 use std::process::exit;
 
 use crate::checks::{
-    body::{body, second_section},
+    body::{second_section, Body},
     entire::{empty, not_ascii},
-    footer::{footer, third_section},
-    summary::summary,
+    footer::{third_section, Footer},
+    sign_off::SignOff,
+    summary::Summary,
 };
 
 pub fn check_commit_message(content: &str) {
