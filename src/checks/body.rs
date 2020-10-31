@@ -2,13 +2,13 @@ pub struct Body<'a> {
     pub body: Result<Vec<&'a str>, &'a str>,
 }
 
-pub fn body(content: &str) -> Body {
-    Body {
-        body: Ok(second_section(&content)),
-    }
-}
-
 impl<'a> Body<'a> {
+    pub fn body(content: &str) -> Body {
+        Body {
+            body: Ok(second_section(&content)),
+        }
+    }
+
     pub fn max_length(&self) -> Result<&'a str, &'a str> {
         match &self.body {
             Ok(body) => match body.iter().map(|x| x.len() > 72).any(|x: bool| x) {
@@ -46,7 +46,7 @@ pub fn second_section(content: &str) -> Vec<&str> {
 #[cfg(test)]
 mod body {
 
-    use super::body;
+    use super::Body;
 
     #[test]
     fn max_length_test() -> Result<(), ()> {
@@ -54,7 +54,7 @@ mod body {
 
 Readme includes: overview, dependencies, license and semantic verisoning. ";
 
-        match body(&over_max).max_length() {
+        match Body::body(&over_max).max_length() {
             Err(_) => Ok(()),
             Ok(_) => Err(()),
         }
@@ -67,7 +67,7 @@ Readme includes: overview, dependencies, license and semantic verisoning. ";
 Readme includes: overview, dependencies, license and semantic verisoning.
 Resolves: <issue-id>";
 
-        match body(&footer_lines).footer_lines() {
+        match Body::body(&footer_lines).footer_lines() {
             Err(_) => Ok(()),
             Ok(_) => Err(()),
         }
