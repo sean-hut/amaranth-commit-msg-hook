@@ -41,10 +41,6 @@ fn program_exit(checks: &[Result<&str, &str>]) {
     }
 }
 
-fn number_of_blank_lines(content: &str) -> usize {
-    content.lines().filter(|x| x.is_empty()).count()
-}
-
 fn check_results(content: &str) -> Vec<Result<&str, &str>> {
     let blank_lines = number_of_blank_lines(&content);
     let summary = summary(&content);
