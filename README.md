@@ -43,3 +43,17 @@ The changelog file is: CHANGELOG.md
 
 All notable changes to this project are documented in the changelog file.
 
+## Versions
+
+### Development Version
+
+The development version is at the head of the `develop` branch.
+
+### Stable Versions
+
+Stable releases are tagged on the `releases` branch.
+
+The [SemVar][semvar] version of semantic versioning is used.
+
+[semvar]: <https://web.archive.org/web/20201009135328/https://semver.org/>
+
