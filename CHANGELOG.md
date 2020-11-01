@@ -20,3 +20,14 @@ versioning.
 This project uses the [ISO 8601 date format][iso] of (YYYY-MM-DD).
 
 [iso]: <https://web.archive.org/web/20201012024406/https://www.iso.org/iso-8601-date-and-time-format.html>
+
+## [Unreleased]
+
+### Added
+
+- BSD Zero Clause license (SPDX: 0BSD)
+- Readme
+- Documentation
+- Makefile
+- Changelog
+- Amaranth commit message Git hook

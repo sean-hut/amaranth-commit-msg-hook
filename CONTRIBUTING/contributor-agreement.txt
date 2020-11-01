@@ -1,0 +1,31 @@
+Contributor Agreement
+Version 0.1.0
+
+I have full power to enter this Agreement.
+
+1) I certify that I am the sole creator and I alone own all copyrights
+   in all contribution I make to this project.
+
+2) I assign and transfer to Sean Hutchings <seanhut@yandex.com> all
+   copyrights in my contributions to this project without reservation
+   or exclusion.
+
+3) With every commit I make and contribute to the project I reaffirm
+   this agreement by using git-commit's --signoff and --gpg-sign
+   options.
+
+4) I agree that Sean Hutchings <seanhut@yandex.com> will from here on
+   own all the copyrights in my contributions to this project.
+
+5) I will not receive any compensation for my copyright assignment and
+   I acknowledges that this is enough consideration.
+
+This agreement is binding upon the legal successors and assigns.
+
+This agreement is effective at the time of signing.
+
+This document is the entire agreement.
+
+If any part of this Agreement is found to be invalid or unenforceable,
+that particular part, and not the entire Agreement, will be
+inoperative.
