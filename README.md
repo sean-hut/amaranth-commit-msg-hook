@@ -1,4 +1,4 @@
-# Amaranth Commit Message Hook
+# Amaranth Commit Message Git Hook
 
 ## Overview
 
