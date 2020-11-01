@@ -57,3 +57,8 @@ The [SemVar][semvar] version of semantic versioning is used.
 
 [semvar]: <https://web.archive.org/web/20201009135328/https://semver.org/>
 
+## Contributing
+
+Contributions are welcome and appreciated.
+
+The contributing rules are in `CONTRIBUTING/CONTRIBUTING.md`.
