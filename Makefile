@@ -1,31 +1,28 @@
 # Use > instead of a tab as recipe prefixes.
 .RECIPEPREFIX = >
 
-####################
-# Internal variables
-####################
-
-main = src/main.rs
-lib = src/lib.rs
-checks = src/checks/body.rs src/checks/entire.rs src/checks/summary.rs src/checks/footer.rs
-rust-files = $(main) $(lib) $(checks)
-
 ###################
 # Integration Tests
 ###################
 
-all: rust-format rust-clippy-lints build test git-diff-check
+all: rust git-diff-check
 
-rust-format: $(rust-files)
+rust: format clippy build test
+
+.PHONY: format
+format:
 > cargo fmt -- --check --files-with-diff
 
-rust-clippy-lints: $(rust-files)
+.PHONY: clippy
+clippy:
 > cargo clippy -- --deny clippy::all
 
-build: $(rust-files)
+.PHONY: build
+build:
 > cargo build
 
-test: $(rust-files)
+.PHONY: test
+test:
 > cargo test
 
 .PHONY: git-diff-check
