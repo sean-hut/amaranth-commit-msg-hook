@@ -54,3 +54,12 @@ fn summary_length() {
 
     assert_eq!(command_output(file), expected_output);
 }
+
+#[test]
+fn ends_with_period() {
+    let file = "tests/expected-output/end-with-period.txt";
+    let expected_output: &str = "[FAIL] Summary line end in a period.\n\
+         [Error] The commit message does not conform to the Amaranth commit message format.\n";
+
+    assert_eq!(command_output(file), expected_output);
+}
