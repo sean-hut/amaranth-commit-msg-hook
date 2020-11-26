@@ -45,3 +45,12 @@ fn category_abbreviation_only() {
 
     assert_eq!(command_output(file), expected_output);
 }
+
+#[test]
+fn summary_length() {
+    let file = "tests/expected-output/summary-length.txt";
+    let expected_output: &str = "[FAIL] Summary line is more than 50 characters.\n\
+         [Error] The commit message does not conform to the Amaranth commit message format.\n";
+
+    assert_eq!(command_output(file), expected_output);
+}
