@@ -72,3 +72,12 @@ fn no_category_abbreviation() {
 
     assert_eq!(command_output(file), expected_output);
 }
+
+#[test]
+fn summary_first_word_lowercase() {
+    let file = "tests/expected-output/summary-first-word-lowercase.txt";
+    let expected_output: &str = "[FAIL] First word in summary line is not lowercase.\n\
+         [Error] The commit message does not conform to the Amaranth commit message format.\n";
+
+    assert_eq!(command_output(file), expected_output);
+}
