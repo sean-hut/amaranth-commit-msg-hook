@@ -81,3 +81,12 @@ fn summary_first_word_lowercase() {
 
     assert_eq!(command_output(file), expected_output);
 }
+
+#[test]
+fn imperative_mood1() {
+    let file = "tests/expected-output/imperative-mood1.txt";
+    let expected_output: &str = "[FAIL] Summary does not use imperative mood.\n\
+         [Error] The commit message does not conform to the Amaranth commit message format.\n";
+
+    assert_eq!(command_output(file), expected_output);
+}
