@@ -63,3 +63,12 @@ fn ends_with_period() {
 
     assert_eq!(command_output(file), expected_output);
 }
+
+#[test]
+fn no_category_abbreviation() {
+    let file = "tests/expected-output/no-category-abbreviation.txt";
+    let expected_output: &str = "[FAIL] Invalid category abbreviation.\n\
+         [Error] The commit message does not conform to the Amaranth commit message format.\n";
+
+    assert_eq!(command_output(file), expected_output);
+}
