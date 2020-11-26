@@ -31,3 +31,17 @@ fn ascii() {
 
     assert_eq!(command_output(file), expected_output);
 }
+
+////////////////////
+// summary checks //
+////////////////////
+
+#[test]
+fn category_abbreviation_only() {
+    let file = "tests/expected-output/category-abbreviation-only.txt";
+    let expected_output: &str =
+        "[FAIL] Commit message summary line must to be more than just a category abbreviation.\n\
+         [Error] The commit message does not conform to the Amaranth commit message format.\n";
+
+    assert_eq!(command_output(file), expected_output);
+}
