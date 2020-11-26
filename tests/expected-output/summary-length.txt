@@ -1,0 +1,4 @@
+D setup contributing directory with contributing rules, contributor agreement, directory structure for contributing agreement and directory structure for public keys
+
+Signed-off-by: John Doe <johndoe@example.com>
+

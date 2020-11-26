@@ -31,3 +31,71 @@ fn ascii() {
 
     assert_eq!(command_output(file), expected_output);
 }
+
+////////////////////
+// summary checks //
+////////////////////
+
+#[test]
+fn category_abbreviation_only() {
+    let file = "tests/expected-output/category-abbreviation-only.txt";
+    let expected_output: &str =
+        "[FAIL] Commit message summary line must to be more than just a category abbreviation.\n\
+         [Error] The commit message does not conform to the Amaranth commit message format.\n";
+
+    assert_eq!(command_output(file), expected_output);
+}
+
+#[test]
+fn summary_length() {
+    let file = "tests/expected-output/summary-length.txt";
+    let expected_output: &str = "[FAIL] Summary line is more than 50 characters.\n\
+         [Error] The commit message does not conform to the Amaranth commit message format.\n";
+
+    assert_eq!(command_output(file), expected_output);
+}
+
+#[test]
+fn ends_with_period() {
+    let file = "tests/expected-output/end-with-period.txt";
+    let expected_output: &str = "[FAIL] Summary line end in a period.\n\
+         [Error] The commit message does not conform to the Amaranth commit message format.\n";
+
+    assert_eq!(command_output(file), expected_output);
+}
+
+#[test]
+fn no_category_abbreviation() {
+    let file = "tests/expected-output/no-category-abbreviation.txt";
+    let expected_output: &str = "[FAIL] Invalid category abbreviation.\n\
+         [Error] The commit message does not conform to the Amaranth commit message format.\n";
+
+    assert_eq!(command_output(file), expected_output);
+}
+
+#[test]
+fn summary_first_word_lowercase() {
+    let file = "tests/expected-output/summary-first-word-lowercase.txt";
+    let expected_output: &str = "[FAIL] First word in summary line is not lowercase.\n\
+         [Error] The commit message does not conform to the Amaranth commit message format.\n";
+
+    assert_eq!(command_output(file), expected_output);
+}
+
+#[test]
+fn imperative_mood1() {
+    let file = "tests/expected-output/imperative-mood1.txt";
+    let expected_output: &str = "[FAIL] Summary does not use imperative mood.\n\
+         [Error] The commit message does not conform to the Amaranth commit message format.\n";
+
+    assert_eq!(command_output(file), expected_output);
+}
+
+#[test]
+fn imperative_mood2() {
+    let file = "tests/expected-output/imperative-mood2.txt";
+    let expected_output: &str = "[FAIL] Summary does not use imperative mood.\n\
+         [Error] The commit message does not conform to the Amaranth commit message format.\n";
+
+    assert_eq!(command_output(file), expected_output);
+}
